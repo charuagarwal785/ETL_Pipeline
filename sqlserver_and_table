@@ -1,0 +1,28 @@
+from pyspark.sql import SparkSession
+from pyspark.sql.functions import col
+
+# Create Spark session
+spark = SparkSession.builder.appName("ChangeDataCapture").getOrCreate()
+
+# Define JDBC properties
+jdbc_url = "jdbc:sqlserver://your-server-name.database.windows.net:1433;database=YourDatabaseName"
+connection_properties = {
+    "user": "your-username",
+    "password": "your-password",
+    "driver": "com.microsoft.sqlserver.jdbc.SQLServerDriver"
+}
+
+# Load data from SQL Server tables
+customer_df = spark.read.jdbc(jdbc_url, "Customer", properties=connection_properties)
+product_df = spark.read.jdbc(jdbc_url, "Product", properties=connection_properties)
+order_df = spark.read.jdbc(jdbc_url, "[Order]", properties=connection_properties)
+inventory_df = spark.read.jdbc(jdbc_url, "Inventory", properties=connection_properties)
+
+# Perform your ETL logic here
+# For example, you can capture changes and update tables accordingly
+
+# Save the transformed data back to SQL Server (if needed)
+# customer_df.write.jdbc(jdbc_url, "Customer", mode="overwrite", properties=connection_properties)
+# product_df.write.jdbc(jdbc_url, "Product", mode="overwrite", properties=connection_properties)
+# order_df.write.jdbc(jdbc_url, "[Order]", mode="overwrite", properties=connection_properties)
+# inventory_df.write.jdbc(jdbc_url, "Inventory", mode="overwrite", properties=connection_properties)
