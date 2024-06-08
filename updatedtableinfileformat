@@ -1,0 +1,4 @@
+customer_df.write.csv("/mnt/data/customer_updated.csv", mode="overwrite", header=True)
+product_df.write.csv("/mnt/data/product_updated.csv", mode="overwrite", header=True)
+order_df.write.csv("/mnt/data/order_updated.csv", mode="overwrite", header=True)
+inventory_df.write.csv("/mnt/data/inventory_updated.csv", mode="overwrite", header=True)
